@@ -162,7 +162,7 @@ const Profile = () => {
                borderWidth: 2,
                borderColor: 'white'
             }}></Image>
-            <Text>{element.rating}⭐</Text>
+            <Text style={{color: mode==='light'?'#1c1c1c':'#efefef'}}>{element.rating}⭐</Text>
          </View>))}
          </ScrollView>
       </View>
