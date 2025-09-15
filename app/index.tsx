@@ -2,7 +2,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as Font from 'expo-font';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View, useColorScheme } from "react-native";
 import { Float } from 'react-native/Libraries/Types/CodegenTypes';
 import StackingBezierCurve from "./components/curve";
 
@@ -15,9 +15,16 @@ type Props = {
   navigation: HomeScreenNavigationProp;
 };
 
+
 export default function Index() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  
+  const systemScheme = useColorScheme();
+  const [mode, setMode] = useState(systemScheme);
+
+  const toggleMode = () => {
+    setMode(mode === 'light' ? 'dark' : 'light');
+    console.log(mode)
+  };  
   useEffect(() => {
     Font.loadAsync({
       'Inter': require('../assets/fonts/Inter.ttf'),
@@ -39,14 +46,22 @@ export default function Index() {
     {"id":12341,"price":12,"location":"Vandallur","img":"https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg"}
   ]
   return (
-    <View style={styles.container}>
+    <View style={[{backgroundColor: mode==='light'?'#efefef':'#1c1c1c'},styles.container]}>
       <View style={styles.headerContainer}>
         <StackingBezierCurve width={375} height={200}/>
         <Pressable style={styles.settingsButton}>
-          <View style={styles.settingsWrapper}>
+          <View style={[{backgroundColor: mode==='light'?'#efefef':'#1c1c1c'},styles.settingsWrapper]}>
             <Image
               source={require('../assets/images/settings.png')}
               style={styles.settingsIcon}
+            />
+          </View>
+        </Pressable>
+        <Pressable style={styles.themesButton} onPress={toggleMode}>
+          <View style={[{backgroundColor: mode==='light'?'#efefef':'#1c1c1c'},styles.themesWrapper]}>
+            <Image
+              source={mode==='light'?require('../assets/images/moon.png'):require('../assets/images/sun.png')}
+              style={styles.themesIcon}
             />
           </View>
         </Pressable>
@@ -54,24 +69,31 @@ export default function Index() {
       <View style={styles.content}>
         <Pressable   onPress={() => {
     console.log('Pressable was clicked!');
-    router.push('/profile')
+    router.push({
+      pathname: '/profile',
+      params:{
+        mode: mode
+      }
+    })
   }}>
           <Image source={{uri: img_url}} style={{
             width: 75,
             height: 75,
             borderRadius: 500,
+            borderColor: 'white',
+            borderWidth: 2
           }}></Image>
           </Pressable>
-          <Text style={{fontFamily: 'Roboto',fontWeight: 'bold', fontSize: 23, color: '#1c1c1c', marginTop: 40, marginLeft: 5}}>HELLO, {user_name.toUpperCase()} !</Text>
+          <Text style={{fontFamily: 'Roboto',fontWeight: 'bold', fontSize: 23, color: mode==='light'?'#1c1c1c':'#efefef', marginTop: 40, marginLeft: 5}}>HELLO, {user_name.toUpperCase()} !</Text>
       </View>
-      <Text style={{fontFamily: 'Epunda', fontSize: 15, paddingLeft: 105}}>Avl. CREDITS : {credits_avail}</Text>
+      <Text style={{fontFamily: 'Epunda', fontSize: 15, paddingLeft: 105, color: mode==='light'?'#1c1c1c':'#efefef'}}>Avl. CREDITS : {credits_avail}</Text>
       <View style={{ margin: 30, display:'flex', flexDirection:'row', alignContent: 'center', alignItems: 'center', backgroundColor: 'rgba(235, 229, 229, 0.5)', padding: 20, borderRadius: 20}}>
-        <Text style={{fontFamily:'roboto', fontWeight: 'bold', fontSize: 20, width:'auto'}}>
+        <Text style={{fontFamily:'roboto', fontWeight: 'bold', fontSize: 20, width:'auto',color: mode==='light'?'#1c1c1c':'#efefef'}}>
           CREATE YOUR NEW {'\n'}AD BILLBOARD
         </Text>
         <TouchableOpacity onPress={()=>{}}>
           <View style={{
-            backgroundColor: 'rgba(60, 48, 219, 1)',
+            backgroundColor: mode==='light'?'#3555d4ff':'#574ed6ff',
             borderRadius: 500,
             marginLeft: 90,
           }}>
@@ -83,7 +105,7 @@ export default function Index() {
         </TouchableOpacity>
         
       </View>
-      <Text style={{fontFamily: 'Roboto',fontWeight: 'bold', fontSize: 23, color: '#1c1c1c',marginLeft: 30}}>MY ADS BILL-BOARD</Text>
+      <Text style={{fontFamily: 'Roboto',fontWeight: 'bold', fontSize: 23, color: mode==='light'?'#1c1c1c':'#efefef',marginLeft: 30}}>MY ADS BILL-BOARD</Text>
       <ScrollView style={{height: 400, margin: 10, marginTop: 20}}>
         {sample_data.map((rec, index)=>(
           <View key={index} style={{
@@ -98,9 +120,9 @@ export default function Index() {
                           backgroundColor: 'white',
   elevation: 5}}><Image source={{uri: rec.img, width: 70, height: 70}} style={{shadowColor: 'black'}} ></Image></View>
             <View style={{marginLeft: 30}}>
-              <Text style={{fontFamily: 'Roboto', fontSize: 15}}><Text style={{fontWeight: 'bold'}}>BOARD ID:</Text>{'\t'}{rec.id}</Text>
-              <Text style={{fontFamily: 'Roboto', fontSize: 15}}><Text style={{fontWeight: 'bold'}}>PRICE:</Text>{'\t'}{rec.price}</Text>
-              <Text style={{fontFamily: 'Roboto', fontSize: 15}}><Text style={{fontWeight: 'bold'}}>LOCATION:</Text>{'\t'}{rec.location}</Text>
+              <Text style={{fontFamily: 'Roboto', fontSize: 15,color: mode==='light'?'#1c1c1c':'#efefef'}}><Text style={{fontWeight: 'bold'}}>BOARD ID:</Text>{'\t'}{rec.id}</Text>
+              <Text style={{fontFamily: 'Roboto', fontSize: 15,color: mode==='light'?'#1c1c1c':'#efefef'}}><Text style={{fontWeight: 'bold'}}>PRICE:</Text>{'\t'}{rec.price}</Text>
+              <Text style={{fontFamily: 'Roboto', fontSize: 15,color: mode==='light'?'#1c1c1c':'#efefef'}}><Text style={{fontWeight: 'bold'}}>LOCATION:</Text>{'\t'}{rec.location}</Text>
             </View>
             <TouchableOpacity onPress={()=>console.log("yeah....")} style={{
               backgroundColor: '#3555d4ff',
@@ -114,7 +136,8 @@ export default function Index() {
               <Text style={{
                 textAlign: 'center',
                 alignContent:'center',
-                color: 'white'
+                color: 'white',
+                backgroundColor: mode==='light'?'#3555d4ff':'#574ed6ff'
               }}>Track</Text>
             </TouchableOpacity>
           </View>
@@ -129,7 +152,6 @@ const styles = StyleSheet.create({
     flex: 2,
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#fff',
     verticalAlign: 'top'
     
   },
@@ -149,7 +171,6 @@ const styles = StyleSheet.create({
   settingsWrapper: {
     padding: 4,
     borderRadius: 500,
-    backgroundColor: 'white',
   },
   settingsIcon: {
     width: 30,
@@ -173,5 +194,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 'auto',
     marginTop: 50,
     marginLeft: 20,
+  },
+  themesButton: {
+    position: 'absolute',
+    top: 40,
+    right: 100,
+    zIndex: 10,
+  },
+  themesWrapper: {
+    padding: 4,
+    borderRadius: 500,
+  },
+  themesIcon: {
+    width: 30,
+    height: 30,
   },
 });

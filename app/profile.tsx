@@ -1,10 +1,11 @@
 import * as Font from 'expo-font';
-import { router } from 'expo-router';
+import { router, useGlobalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import stripesImage from '../assets/images/stripes.jpg';
 
 const Profile = () => {
+   const {mode} = useGlobalSearchParams()
    const [fontsLoaded, setFontsLoaded] = useState(false);
    let img_url:string = 'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg'
    let user_name:string = 'Naveen Bharath'
@@ -70,7 +71,7 @@ const Profile = () => {
       }).then(() => setFontsLoaded(true));
    }, []);
    return(
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 , backgroundColor: mode==='light'?'#efefef':'#1c1c1c'}}>
       <View style={{
          display:'flex',
          flexDirection:'row',
@@ -78,7 +79,7 @@ const Profile = () => {
          <View style={{
             width:w_device/2,
             height: h_device/2.2,
-            backgroundColor: 'rgba(236,235,253,255)',
+            backgroundColor: mode==='light'?'rgba(236,235,253,255)':'#424247',
             justifyContent: 'center',
             alignItems: 'center'
          }}>
@@ -106,32 +107,35 @@ const Profile = () => {
                fontFamily:'roboto',
                fontSize: 16,
                fontWeight: 'bold',
-               marginTop: 5
+               marginTop: 5,
+               color: mode==='light'?'#1c1c1c':'#efefef'
             }}>{user_name.toUpperCase()}</Text>
          </View>
          <View style={{marginTop: 25, padding: 10, marginRight: 5, width: w_device/2-10}}>
             <Text style={{
                alignSelf: 'flex-end',
                fontFamily:'roboto',
-               fontWeight: 'bold'
+               fontWeight: 'bold',
+               color: mode==='light'?'#1c1c1c':'#efefef'
+
             }}>PROFILE</Text>
-            <Text style={{marginVertical:15, fontFamily: 'roboto', fontSize: 11, fontWeight:'bold'}}>PROFESSION{'\n'}<Text style={{
-               color:'rgba(1, 163, 250, 1)',
-               paddingRight: 3,
-               fontWeight: 'normal'
+            <Text style={{marginVertical:15, fontFamily: 'roboto', fontSize: 11, fontWeight:'bold',color: mode==='light'?'#1c1c1c':'#efefef'}}>PROFESSION{'\n'}<Text style={{
+               color:mode==='light'?'rgba(1, 163, 250, 1)':'rgba(129, 217, 255, 1)',
+               paddingRight: 3, 
+               fontWeight: 'normal', 
             }}>{profession}</Text></Text>
-            <Text style={{marginVertical:15, fontFamily: 'roboto', fontSize: 11,fontWeight:'bold'}}>CONTACT{'\n'}<Text style={{
-               color:'rgba(1, 163, 250, 1)',
+            <Text style={{marginVertical:15, fontFamily: 'roboto', fontSize: 11,fontWeight:'bold',color: mode==='light'?'#1c1c1c':'#efefef'}}>CONTACT{'\n'}<Text style={{
+               color:mode==='light'?'rgba(1, 163, 250, 1)':'rgba(129, 217, 255, 1)',
                paddingRight: 3,
                fontWeight: 'normal'
             }}>{contact}</Text></Text>
-            <Text style={{marginVertical:15, fontFamily: 'roboto', fontSize: 11,fontWeight:'bold'}}>LOCATION{'\n'}<Text style={{
-               color:'rgba(1, 163, 250, 1)',
+            <Text style={{marginVertical:15, fontFamily: 'roboto', fontSize: 11,fontWeight:'bold',color: mode==='light'?'#1c1c1c':'#efefef'}}>LOCATION{'\n'}<Text style={{
+               color:mode==='light'?'rgba(1, 163, 250, 1)':'rgba(129, 217, 255, 1)',
                paddingRight: 3,
                fontWeight: 'normal'
             }}>{location}</Text></Text>
-            <Text style={{marginVertical:15, fontFamily: 'roboto', fontSize: 11,fontWeight:'bold'}}>ABOUT COMPANY{'\n'}<Text style={{
-               color:'rgba(1, 163, 250, 1)',
+            <Text style={{marginVertical:15, fontFamily: 'roboto', fontSize: 11,fontWeight:'bold',color: mode==='light'?'#1c1c1c':'#efefef'}}>ABOUT COMPANY{'\n'}<Text style={{
+               color:mode==='light'?'rgba(1, 163, 250, 1)':'rgba(129, 217, 255, 1)',
                marginRight: 3,
                fontWeight: 'normal'
             }}>{about}</Text></Text>
@@ -141,7 +145,7 @@ const Profile = () => {
          display:'flex',
          flexDirection:'column'
       }}>
-         <Text style={{fontFamily:'roboto',fontWeight:'bold',textAlign:'center', marginTop: 10}}>REVIEWS FROM OUR TRUSTEES</Text>
+         <Text style={{fontFamily:'roboto',fontWeight:'bold',textAlign:'center', marginTop: 10,color: mode==='light'?'#1c1c1c':'#efefef'}}>REVIEWS FROM OUR TRUSTEES</Text>
          <ScrollView horizontal={true} style={{
             display:'flex',
             flexDirection:'row',
