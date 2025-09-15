@@ -38,6 +38,54 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/FiraSans-MediumItalic.ttf"
+          ],
+          "android": {
+            "fonts": [
+              {
+                "fontFamily": "Inter",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/Inter-Italic.ttf",
+                    "weight": "700",
+                    "style": "italic"
+                  },
+                  {
+                    "path": "./assets/fonts/Inter.ttf",
+                    "weight": "700"
+                  }
+                ]
+              },
+              {
+                "fontFamily": "Epunda",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/EpundaSlab-Medium.ttf"
+                  },
+                  {
+                    "path":"./assets/fonts/EpundaSlab-ExtraBold.ttf",
+                    "weight":"700"
+                  },
+                  {
+                    "path":"./assets/fonts/EpundaSlab-Medium.ttf",
+                    "weight": "400"
+                  }
+                ]
+              }
+            ]
+          },
+          "ios": {
+            "fonts": [
+              "./assets/fonts/Inter.ttf",
+              "./assets/fonts/Inter-Italic.ttf"
+            ]
+          }
+        }
       ]
     ],
     "experiments": {
